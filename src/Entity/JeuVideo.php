@@ -17,9 +17,6 @@ class JeuVideo
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $developpeur = null;
-
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTime $dateSortie = null;
 
@@ -46,6 +43,10 @@ class JeuVideo
     #[ORM\JoinColumn(nullable: false)]
     private ?Genre $genre = null;
 
+    #[ORM\ManyToOne(inversedBy: 'jeuVideos')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Developpeur $developpeur = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,18 +60,6 @@ class JeuVideo
     public function setTitre(string $titre): static
     {
         $this->titre = $titre;
-
-        return $this;
-    }
-
-    public function getDeveloppeur(): ?string
-    {
-        return $this->developpeur;
-    }
-
-    public function setDeveloppeur(string $developpeur): static
-    {
-        $this->developpeur = $developpeur;
 
         return $this;
     }
@@ -167,6 +156,18 @@ class JeuVideo
     public function setGenre(?Genre $genre): static
     {
         $this->genre = $genre;
+
+        return $this;
+    }
+
+    public function getDeveloppeur(): ?Developpeur
+    {
+        return $this->developpeur;
+    }
+
+    public function setDeveloppeur(?Developpeur $developpeur): static
+    {
+        $this->developpeur = $developpeur;
 
         return $this;
     }
