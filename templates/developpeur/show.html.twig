@@ -1,34 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Developpeur{% endblock %}
+{% block title %}Développeur{% endblock %}
 
 {% block body %}
-    <h1>Developpeur</h1>
+    <h1>Développeur : {{ developpeur.nom }}</h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ developpeur.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ developpeur.nom }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ developpeur.createdAt ? developpeur.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ developpeur.UpdatedAt ? developpeur.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ developpeur.id }}</td>
+        </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{ developpeur.nom }}</td>
+        </tr>
+        <tr>
+            <th>Date de création</th>
+            <td>{{ developpeur.createdAt ? developpeur.createdAt|date('d/m/Y H:i') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Date de modification</th>
+            <td>{{ developpeur.updatedAt ? developpeur.updatedAt|date('d/m/Y H:i') : '' }}</td>
+        </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_developpeur_index') }}">back to list</a>
+        <a href="{{ path('app_developpeur_edit', {'id': developpeur.id}) }}" class="btn">Modifier</a>
 
-    <a href="{{ path('app_developpeur_edit', {'id': developpeur.id}) }}">edit</a>
+        {{ include('developpeur/_delete_form.html.twig') }}
 
-    {{ include('developpeur/_delete_form.html.twig') }}
+        <a href="{{ path('app_developpeur_index') }}">Retour à la liste de développeurs</a>
 {% endblock %}

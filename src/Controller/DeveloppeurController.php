@@ -26,6 +26,8 @@ final class DeveloppeurController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $developpeur = new Developpeur();
+        $developpeur->setCreatedAt(new \DateTimeImmutable());
+
         $form = $this->createForm(DeveloppeurType::class, $developpeur);
         $form->handleRequest($request);
 
@@ -57,6 +59,7 @@ final class DeveloppeurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $developpeur->setUpdatedAt(new \DateTimeImmutable());
             $entityManager->flush();
 
             return $this->redirectToRoute('app_developpeur_index', [], Response::HTTP_SEE_OTHER);

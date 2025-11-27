@@ -1,13 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Developpeur{% endblock %}
+{% block title %}Modifier Développeur{% endblock %}
 
 {% block body %}
-    <h1>Edit Developpeur</h1>
+    <h1>Modifier le développeur : {{ developpeur.nom }}</h1>
 
-    {{ include('developpeur/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_developpeur_index') }}">back to list</a>
-
+    {{ include('developpeur/_form.html.twig', {'button_label': 'Valider'}) }}
     {{ include('developpeur/_delete_form.html.twig') }}
+    <a href="{{ path('app_developpeur_index') }}">Retour à la liste de développeurs</a>
 {% endblock %}
