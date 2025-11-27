@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des éditeurs{% endblock %}
+
+{% block body %}
+    <h1>Liste des éditeurs</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Pays</th>
+                <th>Description</th>
+                <th>Site Web</th>
+                <th>-- Actions --</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for editeur in editeurs %}
+            <tr>
+                <td>{{ editeur.id }}</td>
+                <td>{{ editeur.nom }}</td>
+                <td>{{ editeur.pays }}</td>
+                <td>{{ editeur.description ? editeur.description|slice(0, 150) ~ '...' : '' }}</td>
+                <td>
+                    {% if editeur.siteWeb %}
+                        <a href="{{ editeur.siteWeb }}" target="_blank">{{ editeur.siteWeb }}</a>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('app_editeur_show', {'id': editeur.id}) }}">Consulter</a>
+                    <a href="{{ path('app_editeur_edit', {'id': editeur.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Aucun éditeur trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_editeur_new') }}">Ajouter un éditeur</a>
+{% endblock %}

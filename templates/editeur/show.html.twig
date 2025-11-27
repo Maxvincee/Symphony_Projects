@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Éditeur{% endblock %}
+
+{% block body %}
+    <h1>Éditeur : {{ editeur.nom }}</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ editeur.id }}</td>
+        </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{ editeur.nom }}</td>
+        </tr>
+        <tr>
+            <th>Pays</th>
+            <td>{{ editeur.pays }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ editeur.description }}</td>
+        </tr>
+        <tr>
+            <th>Site Web</th>
+            <td>
+                {% if editeur.siteWeb %}
+                    <a href="{{ editeur.siteWeb }}" target="_blank">{{ editeur.siteWeb }}</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Date de création</th>
+            <td>{{ editeur.createdAt ? editeur.createdAt|date('d/m/Y H:i') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Date de modification</th>
+            <td>{{ editeur.updatedAt ? editeur.updatedAt|date('d/m/Y H:i') : '' }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_editeur_edit', {'id': editeur.id}) }}" class="btn">Modifier</a>
+
+    {{ include('editeur/_delete_form.html.twig') }}
+
+    <a href="{{ path('app_editeur_index') }}">Retour à la liste des éditeurs</a>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des genres de jeux vidéo{% endblock %}
+
+{% block body %}
+    <h1>Liste des genres de jeux vidéo</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Est actif</th>
+                <th>-- Actions --</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for genre in genres %}
+            <tr>
+                <td>{{ genre.id }}</td>
+                <td>{{ genre.nom|upper }}</td>
+                <td>{{ genre.description }}</td>
+                <td>{{ genre.actif ? 'Oui' : 'Non' }}</td>
+                <td>
+                    <a href="{{ path('app_genre_show', {'id': genre.id}) }}">Consulter</a>
+                    <a href="{{ path('app_genre_edit', {'id': genre.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Aucun genre trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_genre_new') }}">Ajouter un genre</a>
+{% endblock %}

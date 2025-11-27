@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des jeux vidéo{% endblock %}
+
+{% block body %}
+    <h1>Liste des jeux vidéo</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Images</th>
+            <th>Titre</th>
+            <th>Genre</th>
+            <th>Date de sortie</th>
+            <th>Prix</th>
+            <th>Editeur</th>
+            <th>Développeur</th>
+            <th>-- Actions --</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for jeu_video in jeu_videos %}
+            <tr>
+                <td>{{ jeu_video.id }}</td>
+                <td>
+                    {% if jeu_video.imageUrl %}
+                        <img src="{{ asset('uploads/' ~ jeu_video.imageUrl) }}"
+                             alt="Image du jeu"
+                             style="max-width: 300px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    {% else %}
+                        <p><em>Aucune image pour ce jeu.</em></p>
+                    {% endif %}
+                </td>
+                <td>{{ jeu_video.titre }}</td>
+                <td>{{ jeu_video.genre ? jeu_video.genre.nom|upper : '' }}</td>
+                <td>{{ jeu_video.dateSortie ? jeu_video.dateSortie|date('d/m/Y') : '' }}</td>
+                <td>{{ jeu_video.prix ? jeu_video.prix|number_format(2, ',', ' ') ~ ' €' : '' }}</td>
+                <td>{{ jeu_video.editeur ? jeu_video.editeur.nom : '' }}</td>
+                <td>{{ jeu_video.developpeur ? jeu_video.developpeur.nom : '' }}</td>
+
+                <td>
+                    <a href="{{ path('app_jeu_video_show', {'id': jeu_video.id}) }}">Consulter</a>
+                    <a href="{{ path('app_jeu_video_edit', {'id': jeu_video.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Aucun jeu vidéo trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_jeu_video_new') }}">Ajouter un jeu</a>
+{% endblock %}

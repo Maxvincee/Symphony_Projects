@@ -42,21 +42,76 @@ class AppFixtures extends Fixture
         }
 
         // ========================================================================= //
-        // 2. CRÉATION DES ÉDITEURS
+        // 2. CRÉATION DES ÉDITEURS (AVEC DESCRIPTIONS MAINTENANT !)
         // ========================================================================= //
 
         $editeursData = [
-            ['nom' => 'Nintendo', 'pays' => 'Japon', 'site' => 'https://www.nintendo.fr'],
-            ['nom' => 'Ubisoft', 'pays' => 'France', 'site' => 'https://www.ubisoft.com'],
-            ['nom' => 'Electronic Arts', 'pays' => 'USA', 'site' => 'https://www.ea.com'],
-            ['nom' => 'Sony Interactive Entertainment', 'pays' => 'Japon', 'site' => 'https://www.sie.com'],
-            ['nom' => 'Rockstar Games', 'pays' => 'USA', 'site' => 'https://www.rockstargames.com'],
-            ['nom' => 'CD Projekt', 'pays' => 'Pologne', 'site' => 'https://en.cdprojektred.com'],
-            ['nom' => 'Square Enix', 'pays' => 'Japon', 'site' => 'https://www.square-enix-games.com'],
-            ['nom' => 'FromSoftware', 'pays' => 'Japon', 'site' => 'https://www.fromsoftware.jp'],
-            ['nom' => 'Xbox Game Studios', 'pays' => 'USA', 'site' => 'https://www.xbox.com/fr-FR/xbox-game-studios'],
-            ['nom' => 'Capcom', 'pays' => 'Japon', 'site' => 'https://www.capcom.com'],
-            ['nom' => 'Activision', 'pays' => 'USA', 'site' => 'https://www.activision.com'],
+            [
+                'nom' => 'Nintendo',
+                'pays' => 'Japon',
+                'site' => 'https://www.nintendo.fr',
+                'description' => 'Multinationale japonaise fondée en 1889, Nintendo est l\'un des leaders mondiaux du jeu vidéo, célèbre pour ses franchises Mario, Zelda et Pokémon.'
+            ],
+            [
+                'nom' => 'Ubisoft',
+                'pays' => 'France',
+                'site' => 'https://www.ubisoft.com',
+                'description' => 'Entreprise française de développement et d\'édition, connue pour des mondes ouverts immersifs comme Assassin\'s Creed, Far Cry et Watch Dogs.'
+            ],
+            [
+                'nom' => 'Electronic Arts',
+                'pays' => 'USA',
+                'site' => 'https://www.ea.com',
+                'description' => 'Leader américain du divertissement interactif, EA est incontournable dans les jeux de sport (EA FC, Madden) et les simulations (Les Sims).'
+            ],
+            [
+                'nom' => 'Sony Interactive Entertainment',
+                'pays' => 'Japon',
+                'site' => 'https://www.sie.com',
+                'description' => 'Filiale du groupe Sony, elle gère la marque PlayStation et produit des exclusivités majeures acclamées par la critique.'
+            ],
+            [
+                'nom' => 'Rockstar Games',
+                'pays' => 'USA',
+                'site' => 'https://www.rockstargames.com',
+                'description' => 'Célèbre pour ses jeux en monde ouvert provocateurs et détaillés, notamment les séries Grand Theft Auto et Red Dead Redemption.'
+            ],
+            [
+                'nom' => 'CD Projekt',
+                'pays' => 'Pologne',
+                'site' => 'https://en.cdprojektred.com',
+                'description' => 'Studio polonais mondialement reconnu pour ses RPG narratifs profonds, en particulier la saga The Witcher et Cyberpunk 2077.'
+            ],
+            [
+                'nom' => 'Square Enix',
+                'pays' => 'Japon',
+                'site' => 'https://www.square-enix-games.com',
+                'description' => 'Société japonaise spécialisée dans les jeux de rôle (RPG), célèbre pour les franchises Final Fantasy, Dragon Quest et Kingdom Hearts.'
+            ],
+            [
+                'nom' => 'FromSoftware',
+                'pays' => 'Japon',
+                'site' => 'https://www.fromsoftware.jp',
+                'description' => 'Studio japonais réputé pour la difficulté exigeante de ses jeux et ses univers sombres, créateur du genre "Souls-like" (Elden Ring, Dark Souls).'
+            ],
+            [
+                'nom' => 'Xbox Game Studios',
+                'pays' => 'USA',
+                'site' => 'https://www.xbox.com/fr-FR/xbox-game-studios',
+                'description' => 'La branche de production de jeux vidéo de Microsoft, regroupant de nombreux studios talentueux pour alimenter l\'écosystème Xbox.'
+            ],
+            [
+                'nom' => 'Capcom',
+                'pays' => 'Japon',
+                'site' => 'https://www.capcom.com',
+                'description' => 'Développeur et éditeur japonais historique, créateur de franchises cultes comme Resident Evil, Street Fighter et Monster Hunter.'
+            ],
+            [
+                'nom' => 'Activision',
+                'pays' => 'USA',
+                'site' => 'https://www.activision.com',
+                'description' => 'Un des plus grands éditeurs américains, principalement connu pour la franchise de tir à la première personne ultra-populaire Call of Duty.'
+            ],
         ];
 
         $editeurs = [];
@@ -65,6 +120,8 @@ class AppFixtures extends Fixture
             $editeur->setNom($data['nom']);
             $editeur->setPays($data['pays']);
             $editeur->setSiteWeb($data['site']);
+            // C'est ici qu'on ajoute la description !
+            $editeur->setDescription($data['description']);
             $editeur->setCreatedAt(new DateTimeImmutable());
             $manager->persist($editeur);
             $editeurs[$data['nom']] = $editeur;
@@ -130,12 +187,12 @@ class AppFixtures extends Fixture
             ['titre' => 'Call of Duty: Modern Warfare II', 'prix' => 69.99, 'date' => '2022-10-28', 'desc' => 'La Task Force 141 fait face à une nouvelle menace mondiale.', 'genre' => 'Action', 'editeur' => 'Activision', 'dev' => 'Infinity Ward'],
             ['titre' => 'Animal Crossing: New Horizons', 'prix' => 49.99, 'date' => '2020-03-20', 'desc' => 'Créez votre propre paradis insulaire.', 'genre' => 'Simulation', 'editeur' => 'Nintendo', 'dev' => 'Nintendo EPD'],
             ['titre' => 'Super Mario Odyssey', 'prix' => 49.99, 'date' => '2017-10-27', 'desc' => 'Mario explore de vastes royaumes en 3D à bord de l\'Odyssée.', 'genre' => 'Action', 'editeur' => 'Nintendo', 'dev' => 'Nintendo EPD'],
-            ['titre' => 'God of War Ragnarök', 'prix' => 79.99, 'date' => '2022-11-09', 'desc' => 'Kratos et Atreus doivent voyager dans les Neuf Royaumes.', 'genre' => 'Action-Aventure', 'editeur' => 'Sony Interactive Entertainment', 'dev' => 'Naughty Dog'], // Santa Monica Studio, mais on réutilise pour l'exemple
-            ['titre' => 'Star Wars Jedi: Survivor', 'prix' => 69.99, 'date' => '2023-04-28', 'desc' => 'Cal Kestis continue son combat en tant que l\'un des derniers Jedi.', 'genre' => 'Action-Aventure', 'editeur' => 'Electronic Arts', 'dev' => 'Maxis'], // Respawn, mais on réutilise
-            ['titre' => 'It Takes Two', 'prix' => 39.99, 'date' => '2021-03-26', 'desc' => 'Un jeu d\'aventure et de plateforme exclusivement en coopération.', 'genre' => 'Action-Aventure', 'editeur' => 'Electronic Arts', 'dev' => 'Maxis'], // Hazelight, mais on réutilise
-            ['titre' => 'Portal 2', 'prix' => 9.99, 'date' => '2011-04-19', 'desc' => 'Un jeu de réflexion à la première personne acclamé par la critique.', 'genre' => 'Réflexion', 'editeur' => 'Xbox Game Studios', 'dev' => 'Playground Games'], // Valve, mais on réutilise
-            ['titre' => 'Stardew Valley', 'prix' => 13.99, 'date' => '2016-02-26', 'desc' => 'Créez la ferme de vos rêves dans cette simulation de vie rurale.', 'genre' => 'Simulation', 'editeur' => 'CD Projekt', 'dev' => 'CD Projekt Red'], // ConcernedApe, mais on réutilise
-            ['titre' => 'Hades', 'prix' => 24.99, 'date' => '2020-09-17', 'desc' => 'Défiez le dieu des morts dans ce rogue-like divin.', 'genre' => 'Action', 'editeur' => 'Ubisoft', 'dev' => 'Ubisoft Bordeaux'], // Supergiant, mais on réutilise
+            ['titre' => 'God of War Ragnarök', 'prix' => 79.99, 'date' => '2022-11-09', 'desc' => 'Kratos et Atreus doivent voyager dans les Neuf Royaumes.', 'genre' => 'Action-Aventure', 'editeur' => 'Sony Interactive Entertainment', 'dev' => 'Naughty Dog'],
+            ['titre' => 'Star Wars Jedi: Survivor', 'prix' => 69.99, 'date' => '2023-04-28', 'desc' => 'Cal Kestis continue son combat en tant que l\'un des derniers Jedi.', 'genre' => 'Action-Aventure', 'editeur' => 'Electronic Arts', 'dev' => 'Maxis'],
+            ['titre' => 'It Takes Two', 'prix' => 39.99, 'date' => '2021-03-26', 'desc' => 'Un jeu d\'aventure et de plateforme exclusivement en coopération.', 'genre' => 'Action-Aventure', 'editeur' => 'Electronic Arts', 'dev' => 'Maxis'],
+            ['titre' => 'Portal 2', 'prix' => 9.99, 'date' => '2011-04-19', 'desc' => 'Un jeu de réflexion à la première personne acclamé par la critique.', 'genre' => 'Réflexion', 'editeur' => 'Xbox Game Studios', 'dev' => 'Playground Games'],
+            ['titre' => 'Stardew Valley', 'prix' => 13.99, 'date' => '2016-02-26', 'desc' => 'Créez la ferme de vos rêves dans cette simulation de vie rurale.', 'genre' => 'Simulation', 'editeur' => 'CD Projekt', 'dev' => 'CD Projekt Red'],
+            ['titre' => 'Hades', 'prix' => 24.99, 'date' => '2020-09-17', 'desc' => 'Défiez le dieu des morts dans ce rogue-like divin.', 'genre' => 'Action', 'editeur' => 'Ubisoft', 'dev' => 'Ubisoft Bordeaux'],
             ['titre' => 'Control', 'prix' => 29.99, 'date' => '2019-08-27', 'desc' => 'Une aventure d\'action à la troisième personne surnaturelle.', 'genre' => 'Action-Aventure', 'editeur' => 'Sony Interactive Entertainment', 'dev' => 'Remedy Entertainment'],
             ['titre' => 'Street Fighter 6', 'prix' => 59.99, 'date' => '2023-06-02', 'desc' => 'Le dernier opus de la série de jeux de combat légendaire.', 'genre' => 'Action', 'editeur' => 'Capcom', 'dev' => 'Capcom'],
         ];

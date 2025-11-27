@@ -1,0 +1,39 @@
+{{ form_start(form) }}
+
+    {# Affichage des erreurs globales #}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.titre) }}
+
+<div class="row">
+    <div class="col">
+        {{ form_row(form.genre) }}
+    </div>
+    <div class="col">
+        {{ form_row(form.dateSortie) }}
+    </div>
+</div>
+
+{{ form_row(form.description) }}
+
+<div class="mb-3">
+    {{ form_label(form.prix) }}
+    <div class="input-group" style="max-width: 200px;">
+        {{ form_widget(form.prix) }}
+        <span class="input-group-text">€</span>
+    </div>
+    <div class="form-text">{{ form_help(form.prix) }}</div>
+    {{ form_errors(form.prix) }}
+</div>
+{# --------------------------------------------- #}
+
+    {{ form_row(form.developpeur) }}
+    {{ form_row(form.editeur) }}
+
+    {{ form_row(form.imageFile) }}
+
+<button class="btn btn-primary" style="margin-top: 15px;">
+    {{ button_label|default('Enregistrer') }}
+</button>
+
+{{ form_end(form) }}
