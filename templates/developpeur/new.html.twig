@@ -7,7 +7,8 @@
 
     {{ include('developpeur/_form.html.twig') }}
 
-    <div style="margin-top: 20px;">
-        <a href="{{ path('app_developpeur_index') }}">Retour à la liste de développeurs</a>
+    <div class="d-flex gap-2 mt-3">
+        <button type="submit" form="main-form" class="btn btn-primary">Ajouter</button>
+        <a href="{{ path('app_developpeur_index') }}" class="btn btn-secondary">Retour à la liste</a>
     </div>
 {% endblock %}

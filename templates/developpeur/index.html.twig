@@ -1,35 +1,47 @@
 {% extends 'base.html.twig' %}
 
+{% block breadcrumb %}
+    <li class="breadcrumb-item active" aria-current="page">Développeurs</li>
+{% endblock %}
+
 {% block title %}Liste des développeurs{% endblock %}
 
 {% block body %}
-    <h1>Liste des développeurs</h1>
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1>👨‍💻 Développeurs</h1>
+        <a href="{{ path('app_developpeur_new') }}" class="btn btn-custom">
+            + Nouveau Développeur
+        </a>
+    </div>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nom</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for developpeur in developpeurs %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
             <tr>
-                <td>{{ developpeur.id }}</td>
-                <td>{{ developpeur.nom }}</td>
-                <td>
-                    <a href="{{ path('app_developpeur_show', {'id': developpeur.id}) }}">Consulter</a>
-                    <a href="{{ path('app_developpeur_edit', {'id': developpeur.id}) }}">Modifier</a>
-                </td>
+                <th>Nom</th>
+                <th class="text-end">Actions</th>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">Aucun développeur trouvé</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_developpeur_new') }}">Ajouter un développeur</a>
+            </thead>
+            <tbody>
+            {% for developpeur in developpeurs %}
+                <tr>
+                    <td><strong>{{ developpeur.nom }}</strong></td>
+                    <td class="text-end">
+                        <div class="btn-group">
+                            <a href="{{ path('app_developpeur_show', {'id': developpeur.id}) }}" class="btn btn-sm btn-outline-custom">Voir</a>
+                            <a href="{{ path('app_developpeur_edit', {'id': developpeur.id}) }}" class="btn btn-sm btn-outline-custom">Edit</a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2" class="text-center py-5">
+                        <h5 class="text-muted">Aucun développeur trouvé</h5>
+                        <p>Commencez par ajouter votre premier développeur !</p>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

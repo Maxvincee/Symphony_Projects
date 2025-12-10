@@ -1,0 +1,252 @@
+/* --- Variables --- */
+:root {
+    --bg-body: #0f172a;
+    --bg-card: #1e293b;
+    --bg-header: #1e293bbb; /* Glassy */
+
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+
+    --primary: #6366f1; /* Indigo 500 */
+    --primary-hover: #4f46e5;
+
+    --secondary: #0ea5e9; /* Sky 500 */
+
+    --border-color: #334155;
+
+    --radius: 12px;
+    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Global --- */
+body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    font-family: "Outfit", sans-serif;
+    padding-bottom: 2rem;
+}
+
+a {
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #fff;
+}
+
+/* --- Navbar --- */
+.navbar {
+    background-color: var(--bg-header) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #fff !important;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-link {
+    color: var(--text-muted) !important;
+    font-weight: 500;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary) !important;
+}
+
+/* --- Cards --- */
+.game-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+    border-color: var(--primary);
+}
+
+.game-card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.game-card-body {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.game-meta {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.badge-genre {
+    background-color: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+    padding: 0.25em 0.75em;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.price-tag {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #22c55e; /* Green */
+}
+
+/* --- Buttons --- */
+.btn-custom {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.btn-custom:hover {
+    background-color: var(--primary-hover);
+    color: white;
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+}
+
+.btn-outline-custom {
+    background-color: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.btn-outline-custom:hover {
+    border-color: var(--text-main);
+    color: var(--text-main);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* --- Tables --- */
+.table {
+    color: var(--text-main);
+    --bs-table-bg: transparent;
+    --bs-table-border-color: var(--border-color);
+}
+.table thead th {
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    border-bottom-width: 2px;
+}
+.table tbody th {
+    color: var(--secondary);
+    font-weight: 500;
+    width: 25%;
+}
+.table tbody td {
+    color: var(--text-main);
+}
+
+/* --- Forms --- */
+.form-control, .form-select {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    color: var(--text-main);
+}
+.form-control:focus, .form-select:focus {
+    background-color: var(--bg-card);
+    border-color: var(--primary);
+    color: var(--text-main);
+    box-shadow: 0 0 0 0.25rem rgba(99, 102, 241, 0.25);
+}
+.form-label {
+    color: var(--text-main);
+}
+.input-group-text {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    color: var(--text-main);
+}
+
+/* --- Input Icons (Calendar, Select Arrow) --- */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+.form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23f8fafc' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
+/* --- Buttons Overrides --- */
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+.btn-secondary {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    color: var(--text-muted);
+}
+.btn-secondary:hover {
+    background-color: var(--border-color);
+    border-color: var(--text-muted);
+    color: var(--text-main);
+}
+
+/* --- Footer --- */
+footer {
+    background-color: var(--bg-card) !important;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-main) !important;
+}
+
+/* --- Breadcrumb --- */
+.breadcrumb-item a {
+    color: var(--secondary);
+}
+.breadcrumb-item.active {
+    color: var(--text-muted);
+}

@@ -6,6 +6,10 @@
     <h1>Modifier le développeur : {{ developpeur.nom }}</h1>
 
     {{ include('developpeur/_form.html.twig', {'button_label': 'Valider'}) }}
-    {{ include('developpeur/_delete_form.html.twig') }}
-    <a href="{{ path('app_developpeur_index') }}">Retour à la liste de développeurs</a>
+
+    <div class="d-flex gap-2 mt-3">
+        <button type="submit" form="main-form" class="btn btn-primary">Valider</button>
+        {{ include('developpeur/_delete_form.html.twig') }}
+        <a href="{{ path('app_developpeur_index') }}" class="btn btn-secondary">Retour à la liste</a>
+    </div>
 {% endblock %}

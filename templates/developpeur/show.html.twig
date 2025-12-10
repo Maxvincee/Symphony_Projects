@@ -1,34 +1,37 @@
 {% extends 'base.html.twig' %}
 
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ path('app_developpeur_index') }}">Développeurs</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ developpeur.nom }}</li>
+{% endblock %}
+
 {% block title %}Développeur{% endblock %}
 
 {% block body %}
-    <h1>Développeur : {{ developpeur.nom }}</h1>
+    <h1>👨‍💻 {{ developpeur.nom }}</h1>
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ developpeur.id }}</td>
-        </tr>
-        <tr>
-            <th>Nom</th>
-            <td>{{ developpeur.nom }}</td>
-        </tr>
-        <tr>
-            <th>Date de création</th>
-            <td>{{ developpeur.createdAt ? developpeur.createdAt|date('d/m/Y H:i') : '' }}</td>
-        </tr>
-        <tr>
-            <th>Date de modification</th>
-            <td>{{ developpeur.updatedAt ? developpeur.updatedAt|date('d/m/Y H:i') : '' }}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive mt-4">
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Nom</th>
+                <td>{{ developpeur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Date de création</th>
+                <td>{{ developpeur.createdAt ? developpeur.createdAt|date('d/m/Y H:i') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date de modification</th>
+                <td>{{ developpeur.updatedAt ? developpeur.updatedAt|date('d/m/Y H:i') : '' }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-        <a href="{{ path('app_developpeur_edit', {'id': developpeur.id}) }}" class="btn">Modifier</a>
-
+    <div class="d-flex gap-2 mt-4">
+        <a href="{{ path('app_developpeur_edit', {'id': developpeur.id}) }}" class="btn btn-primary">Modifier</a>
         {{ include('developpeur/_delete_form.html.twig') }}
-
-        <a href="{{ path('app_developpeur_index') }}">Retour à la liste de développeurs</a>
+        <a href="{{ path('app_developpeur_index') }}" class="btn btn-secondary">Retour à la liste</a>
+    </div>
 {% endblock %}
