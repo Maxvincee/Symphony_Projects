@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page non trouvée - Erreur 404{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active" aria-current="page">Erreur 404</li>
+{% endblock %}
+
+{% block body %}
+<div class="container text-center py-5">
+    <div class="error-page">
+        <div class="error-code mb-4">
+            <h1 class="display-1 fw-bold text-white">404</h1>
+        </div>
+
+        <div class="error-message mb-4">
+            <h2 class="text-white mb-3">Page non trouvée</h2>
+            <p class="text-white opacity-75 lead">
+                Désolé, la page que vous recherchez n'existe pas ou a été déplacée.
+            </p>
+        </div>
+
+        <div class="error-illustration mb-5">
+            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="80" stroke="#6366f1" stroke-width="4" fill="none" opacity="0.3"/>
+                <path d="M70 85 Q75 75 80 85" stroke="#6366f1" stroke-width="4" stroke-linecap="round" fill="none"/>
+                <path d="M120 85 Q125 75 130 85" stroke="#6366f1" stroke-width="4" stroke-linecap="round" fill="none"/>
+                <path d="M70 130 Q100 110 130 130" stroke="#6366f1" stroke-width="4" stroke-linecap="round" fill="none"/>
+            </svg>
+        </div>
+
+        <div class="error-actions">
+            <a href="{{ path('app_home') }}" class="btn btn-custom btn-lg me-3">
+                ← Retour à l'accueil
+            </a>
+            <a href="{{ path('app_jeu_video_index') }}" class="btn btn-outline-custom btn-lg">
+                Voir les jeux vidéo
+            </a>
+        </div>
+
+        <div class="error-suggestions mt-5">
+            <p class="text-white opacity-50 small">
+                Suggestions : Vérifiez l'URL ou utilisez la navigation ci-dessus
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+.error-page {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.error-code h1 {
+    font-size: 8rem;
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+}
+
+.error-illustration {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+</style>
+{% endblock %}

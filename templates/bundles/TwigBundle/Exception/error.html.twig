@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur - {{ status_code|default('500') }}{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active" aria-current="page">Erreur {{ status_code|default('500') }}</li>
+{% endblock %}
+
+{% block body %}
+<div class="container text-center py-5">
+    <div class="error-page">
+        <div class="error-code mb-4">
+            <h1 class="display-1 fw-bold text-white">{{ status_code|default('500') }}</h1>
+        </div>
+
+        <div class="error-message mb-4">
+            <h2 class="text-white mb-3">
+                {% if status_code == 500 %}
+                    Erreur interne du serveur
+                {% else %}
+                    Une erreur est survenue
+                {% endif %}
+            </h2>
+            <p class="text-white opacity-75 lead">
+                {% if status_code == 500 %}
+                    Désolé, une erreur technique s'est produite. Nos équipes ont été notifiées.
+                {% else %}
+                    Une erreur inattendue s'est produite. Veuillez réessayer ultérieurement.
+                {% endif %}
+            </p>
+        </div>
+
+        <div class="error-illustration mb-5">
+            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="80" stroke="#f59e0b" stroke-width="4" fill="none" opacity="0.3"/>
+                <circle cx="100" cy="100" r="60" stroke="#f59e0b" stroke-width="3" fill="none" opacity="0.2"/>
+                <path d="M100 60 L100 110" stroke="#f59e0b" stroke-width="6" stroke-linecap="round"/>
+                <circle cx="100" cy="130" r="5" fill="#f59e0b"/>
+                <path d="M70 70 L130 130 M130 70 L70 130" stroke="#f59e0b" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+            </svg>
+        </div>
+
+        <div class="error-actions">
+            <a href="{{ path('app_home') }}" class="btn btn-custom btn-lg me-3">
+                ← Retour à l'accueil
+            </a>
+            <a href="javascript:location.reload()" class="btn btn-outline-custom btn-lg">
+                Réessayer
+            </a>
+        </div>
+
+        <div class="error-suggestions mt-5">
+            <p class="text-white opacity-50 small">
+                Code d'erreur : {{ status_code|default('500') }} |
+                {% if status_text is defined %}{{ status_text }}{% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+.error-page {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.error-code h1 {
+    font-size: 8rem;
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
+}
+
+.error-illustration {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(0.95); }
+}
+</style>
+{% endblock %}

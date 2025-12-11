@@ -2,6 +2,11 @@
 
 {% block title %}Ajouter un jeu vidéo{% endblock %}
 
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ path('app_jeu_video_index') }}">Jeux Vidéo</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Ajouter</li>
+{% endblock %}
+
 {% block body %}
     <h1>Ajouter un jeu vidéo</h1>
 

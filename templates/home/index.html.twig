@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Gestion de Jeux Vidéo{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    {# Hero Section #}
+    <div class="text-center mb-5">
+        <h1 class="display-3 fw-bold mb-3">
+            Gestion de Jeux Vidéo
+        </h1>
+        <p class="lead text-white opacity-75 mb-4">
+            Gérez votre collection de jeux vidéo, explorez notre catalogue et suivez vos statistiques
+        </p>
+    </div>
+
+    {# Statistiques #}
+    <div class="row g-4 mb-5 justify-content-center">
+        <div class="col-md-3">
+            <div class="game-card h-100">
+                <div class="card-body text-center">
+                    <div class="display-4 fw-bold mb-2 text-white">{{ totalJeux }}</div>
+                    <h5 class="card-title mb-0 text-white">Jeux Vidéo</h5>
+                    <p class="small text-white opacity-75 mb-3">Dans notre catalogue</p>
+                    <a href="{{ path('app_jeu_video_index') }}" class="btn btn-outline-custom btn-sm">
+                        Voir tous les jeux →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="game-card h-100">
+                <div class="card-body text-center">
+                    <div class="display-4 fw-bold mb-2 text-white">{{ totalGenres }}</div>
+                    <h5 class="card-title mb-0 text-white">Genres</h5>
+                    <p class="small text-white opacity-75 mb-3">Catégories disponibles</p>
+                    <a href="{{ path('app_genre_index') }}" class="btn btn-outline-custom btn-sm">
+                        Voir les genres →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="game-card h-100">
+                <div class="card-body text-center">
+                    <div class="display-4 fw-bold mb-2 text-white">{{ totalUtilisateurs }}</div>
+                    <h5 class="card-title mb-0 text-white">Utilisateurs</h5>
+                    <p class="small text-white opacity-75 mb-3">Membres actifs</p>
+                    <a href="{{ path('app_collect_index') }}" class="btn btn-outline-custom btn-sm">
+                        Voir les collections →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Derniers Jeux Ajoutés #}
+    <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-white mb-0">Derniers Jeux Ajoutés</h2>
+            <a href="{{ path('app_jeu_video_index') }}" class="btn btn-outline-light">
+                Voir tout le catalogue
+            </a>
+        </div>
+
+        <div class="row g-4">
+            {% for jeu in derniersJeux %}
+                <div class="col-md-4">
+                    <div class="game-card h-100">
+                        <div class="position-relative">
+                            {% if jeu.imageUrl %}
+                                <img src="{{ asset('uploads/' ~ jeu.imageUrl) }}"
+                                     class="card-img-top game-card-img-top"
+                                     alt="{{ jeu.titre }}">
+                            {% else %}
+                                <div class="game-card-img-top d-flex align-items-center justify-content-center bg-dark text-muted">
+                                    <span>Pas d'image</span>
+                                </div>
+                            {% endif %}
+
+                            {% if jeu.genre %}
+                                <span class="position-absolute top-0 end-0 m-2 badge-genre bg-dark bg-opacity-75">
+                                    {{ jeu.genre.nom }}
+                                </span>
+                            {% endif %}
+                        </div>
+
+                        <div class="game-card-body d-flex flex-column">
+                            <h5 class="card-title text-white mb-1">{{ jeu.titre }}</h5>
+
+                            <div class="game-meta small mb-3">
+                                <span class="me-2">{{ jeu.editeur ? jeu.editeur.nom : 'Editeur inconnu' }}</span>
+                                <span>&bull; {{ jeu.dateSortie ? jeu.dateSortie|date('Y') : '' }}</span>
+                            </div>
+
+                            <p class="card-text text-white opacity-75 small mb-3">
+                                {{ jeu.description|length > 100 ? jeu.description|slice(0, 100) ~ '...' : jeu.description }}
+                            </p>
+
+                            <div class="mt-auto d-flex justify-content-between align-items-center">
+                                <span class="price-tag">
+                                    {{ jeu.prix ? jeu.prix|number_format(2, ',', ' ') ~ ' €' : 'Gratuit' }}
+                                </span>
+                                <a href="{{ path('app_jeu_video_show', {'id': jeu.id}) }}"
+                                   class="btn btn-sm btn-outline-custom">
+                                    Voir
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {# Actions Rapides #}
+    <div class="mb-5">
+        <h2 class="text-white mb-4">Actions Rapides</h2>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <a href="{{ path('app_jeu_video_new') }}" class="card bg-dark text-white text-decoration-none hover-lift h-100">
+                    <div class="card-body text-center py-4">
+                        <div class="fs-1 mb-3">+</div>
+                        <h5 class="card-title">Ajouter un Jeu</h5>
+                        <p class="card-text small opacity-75">Enrichir le catalogue</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{{ path('app_collect_new') }}" class="card bg-dark text-white text-decoration-none hover-lift h-100">
+                    <div class="card-body text-center py-4">
+                        <div class="fs-1 mb-3">★</div>
+                        <h5 class="card-title">Ajouter à une Collection</h5>
+                        <p class="card-text small opacity-75">Gérer vos jeux</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{{ path('api_healthcheck') }}" class="card bg-dark text-white text-decoration-none hover-lift h-100">
+                    <div class="card-body text-center py-4">
+                        <div class="fs-1 mb-3">API</div>
+                        <h5 class="card-title">API REST</h5>
+                        <p class="card-text small opacity-75">Explorer l'API</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {# Footer Info #}
+    <div class="text-center text-white opacity-75 mt-5 pb-4">
+        <p class="mb-2">
+            <strong>Projet Symfony</strong> - Gestion de Jeux Vidéo
+        </p>
+        <p class="small mb-0">
+            VINCENT Maxence & DURAND Ruben | BUT Informatique 3ème année | Décembre 2025
+        </p>
+    </div>
+</div>
+{% endblock %}

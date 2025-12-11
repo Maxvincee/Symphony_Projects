@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accès refusé - Erreur 403{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active" aria-current="page">Erreur 403</li>
+{% endblock %}
+
+{% block body %}
+<div class="container text-center py-5">
+    <div class="error-page">
+        <div class="error-code mb-4">
+            <h1 class="display-1 fw-bold text-white">403</h1>
+        </div>
+
+        <div class="error-message mb-4">
+            <h2 class="text-white mb-3">Accès refusé</h2>
+            <p class="text-white opacity-75 lead">
+                Vous n'avez pas les permissions nécessaires pour accéder à cette page.
+            </p>
+        </div>
+
+        <div class="error-illustration mb-5">
+            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="80" stroke="#ef4444" stroke-width="4" fill="none" opacity="0.3"/>
+                <rect x="70" y="90" width="60" height="40" rx="5" stroke="#ef4444" stroke-width="4" fill="none"/>
+                <rect x="85" y="70" width="30" height="25" rx="5" stroke="#ef4444" stroke-width="4" fill="none"/>
+                <circle cx="100" cy="110" r="5" fill="#ef4444"/>
+                <line x1="100" y1="115" x2="100" y2="125" stroke="#ef4444" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <div class="error-actions">
+            <a href="{{ path('app_home') }}" class="btn btn-custom btn-lg me-3">
+                ← Retour à l'accueil
+            </a>
+            <a href="javascript:history.back()" class="btn btn-outline-custom btn-lg">
+                Page précédente
+            </a>
+        </div>
+
+        <div class="error-suggestions mt-5">
+            <p class="text-white opacity-50 small">
+                Si vous pensez qu'il s'agit d'une erreur, contactez l'administrateur
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+.error-page {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.error-code h1 {
+    font-size: 8rem;
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+}
+
+.error-illustration {
+    animation: shake 0.5s ease-in-out infinite;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+</style>
+{% endblock %}
