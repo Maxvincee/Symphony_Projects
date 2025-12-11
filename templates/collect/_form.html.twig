@@ -1,0 +1,34 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            {{ form_row(form.utilisateur) }}
+        </div>
+        <div class="col-md-6 mb-3">
+            {{ form_row(form.jeuvideo) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            {{ form_row(form.statut) }}
+        </div>
+        <div class="col-md-6 mb-3">
+            {{ form_row(form.dateModifStatut) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            {{ form_row(form.prixAchat) }}
+        </div>
+        <div class="col-md-6 mb-3">
+            {{ form_row(form.dateAchat) }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_row(form.commentaire) }}
+    </div>
+
+    <button type="submit" class="btn btn-custom">{{ button_label|default('💾 Enregistrer') }}</button>
+{{ form_end(form) }}

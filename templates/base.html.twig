@@ -37,6 +37,9 @@
                             <a class="nav-link {{ app.request.get('_route') starts with 'app_jeu_video' ? 'active' : '' }}" href="{{ path('app_jeu_video_index') }}">Jeux Vidéo</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {{ app.request.get('_route') starts with 'app_collect' ? 'active' : '' }}" href="{{ path('app_collect_index') }}">Collections</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {{ app.request.get('_route') starts with 'app_genre' ? 'active' : '' }}" href="{{ path('app_genre_index') }}">Genres</a>
                         </li>
                         <li class="nav-item">

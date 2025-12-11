@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Collection de {{ utilisateur.pseudo }}{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ path('app_collect_index') }}">Collections</a></li>
+    <li class="breadcrumb-item active">{{ utilisateur.pseudo }}</li>
+{% endblock %}
+
+{% block body %}
+<div class="mb-4">
+    <div class="d-flex align-items-center mb-3">
+        {% if utilisateur.imageProfil %}
+            <img src="{{ utilisateur.imageProfil }}" alt="{{ utilisateur.pseudo }}" class="rounded-circle me-3" style="width: 80px; height: 80px; object-fit: cover;">
+        {% else %}
+            <div class="rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background-color: var(--primary); color: white; font-size: 2rem; font-weight: bold;">
+                {{ utilisateur.prenom|first }}{{ utilisateur.nom|first }}
+            </div>
+        {% endif %}
+        <div>
+            <h1 class="mb-0">Collection de {{ utilisateur.pseudo }}</h1>
+            <p class="text-white mb-0">{{ utilisateur.prenom }} {{ utilisateur.nom }} • {{ collects|length }} jeu{{ collects|length > 1 ? 'x' : '' }}</p>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a href="{{ path('app_collect_index') }}" class="btn btn-secondary">
+            ← Retour aux collections
+        </a>
+        <a href="{{ path('app_collect_new') }}" class="btn btn-custom">
+            + Ajouter un jeu
+        </a>
+    </div>
+</div>
+
+{% if collects|length > 0 %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Jeu</th>
+                    <th>Statut</th>
+                    <th>Prix d'achat</th>
+                    <th>Date d'achat</th>
+                    <th>Commentaire</th>
+                    <th style="width: 200px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for collect in collects %}
+                <tr>
+                    <td>
+                        <a href="{{ path('app_jeu_video_show', {'id': collect.jeuvideo.id}) }}" class="text-decoration-none">
+                            <strong>{{ collect.jeuvideo.titre }}</strong>
+                        </a>
+                        <br>
+                        <small class="text-white opacity-75">{{ collect.jeuvideo.genre.nom }}</small>
+                    </td>
+                    <td>
+                        <span class="badge {{ collect.statut.badgeClass }}">
+                            {{ collect.statut.label }}
+                        </span>
+                        <br>
+                        <small class="text-white opacity-75">Modifié le {{ collect.dateModifStatut|date('d/m/Y') }}</small>
+                    </td>
+                    <td>
+                        {% if collect.prixAchat %}
+                            <strong class="price-tag">{{ collect.prixAchat }} €</strong>
+                            {% if collect.jeuvideo.prix and collect.jeuvideo.prix > 0 %}
+                                {% set reduction = ((collect.jeuvideo.prix - collect.prixAchat) / collect.jeuvideo.prix * 100)|round %}
+                                <br>
+                                {% if reduction > 0 %}
+                                    <small class="text-success">-{{ reduction }}%</small>
+                                {% elseif reduction < 0 %}
+                                    <small class="text-danger">+{{ (reduction * -1)|round }}%</small>
+                                {% else %}
+                                    <small class="text-white opacity-50">Prix normal</small>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            <span class="text-muted">-</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if collect.dateAchat %}
+                            {{ collect.dateAchat|date('d/m/Y') }}
+                        {% else %}
+                            <span class="text-muted">-</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if collect.commentaire %}
+                            <small>{{ collect.commentaire|length > 50 ? collect.commentaire|slice(0, 50) ~ '...' : collect.commentaire }}</small>
+                        {% else %}
+                            <span class="text-muted">-</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="d-flex gap-1">
+                            <a href="{{ path('app_collect_edit', {'id': collect.id}) }}" class="btn btn-sm btn-outline-custom">
+                                Modifier
+                            </a>
+                            <form method="post" action="{{ path('app_collect_delete', {'id': collect.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce jeu de la collection ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ collect.id) }}">
+                                <button class="btn btn-sm btn-outline-custom">Supprimer</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        Cette collection est vide. <a href="{{ path('app_collect_new') }}">Ajoutez un jeu</a> pour commencer !
+    </div>
+{% endif %}
+{% endblock %}

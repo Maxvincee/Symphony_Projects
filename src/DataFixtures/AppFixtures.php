@@ -6,6 +6,9 @@ use App\Entity\Genre;
 use App\Entity\Editeur;
 use App\Entity\Developpeur;
 use App\Entity\JeuVideo;
+use App\Entity\Utilisateur;
+use App\Entity\Collect;
+use App\Enum\StatutJeuEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use DateTimeImmutable;
@@ -208,10 +211,229 @@ class AppFixtures extends Fixture
             $jeu->setEditeur($editeurs[$data['editeur']]);
             $jeu->setDeveloppeur($developpeurs[$data['dev']]);
             $manager->persist($jeu);
+            $jeux[] = $jeu; // Stocker pour les collections
         }
 
         // ========================================================================= //
-        // 5. ENVOI EN BASE DE DONNÉES
+        // 5. CRÉATION DES UTILISATEURS
+        // ========================================================================= //
+
+        $utilisateursData = [
+            [
+                'prenom' => 'Denis',
+                'nom' => 'DUPONT',
+                'pseudo' => 'denis_gamer',
+                'mail' => 'denis.dupont@example.com',
+                'dateNaissance' => '1995-03-15',
+                'imageProfil' => 'https://i.pravatar.cc/150?img=12'
+            ],
+            [
+                'prenom' => 'Marcelle',
+                'nom' => 'DUMONT',
+                'pseudo' => 'marcelle_rpg',
+                'mail' => 'marcelle.dumont@example.com',
+                'dateNaissance' => '1988-07-22',
+                'imageProfil' => 'https://i.pravatar.cc/150?img=47'
+            ],
+            [
+                'prenom' => 'Thomas',
+                'nom' => 'MARTIN',
+                'pseudo' => 'thomas_pro',
+                'mail' => 'thomas.martin@example.com',
+                'dateNaissance' => '2000-11-08',
+                'imageProfil' => 'https://i.pravatar.cc/150?img=33'
+            ],
+            [
+                'prenom' => 'Sophie',
+                'nom' => 'BERNARD',
+                'pseudo' => 'sophie_games',
+                'mail' => 'sophie.bernard@example.com',
+                'dateNaissance' => '1992-05-30',
+                'imageProfil' => 'https://i.pravatar.cc/150?img=44'
+            ],
+            [
+                'prenom' => 'Lucas',
+                'nom' => 'PETIT',
+                'pseudo' => 'lucas_player',
+                'mail' => 'lucas.petit@example.com',
+                'dateNaissance' => '1998-09-12',
+                'imageProfil' => 'https://i.pravatar.cc/150?img=68'
+            ],
+            [
+                'prenom' => 'Emma',
+                'nom' => 'ROBERT',
+                'pseudo' => 'emma_casual',
+                'mail' => 'emma.robert@example.com',
+                'dateNaissance' => '2002-01-25',
+                'imageProfil' => null
+            ],
+        ];
+
+        $utilisateurs = [];
+        foreach ($utilisateursData as $data) {
+            $user = new Utilisateur();
+            $user->setPrenom($data['prenom']);
+            $user->setNom($data['nom']);
+            $user->setPseudo($data['pseudo']);
+            $user->setMail($data['mail']);
+            if ($data['dateNaissance']) {
+                $user->setDateNaissance(new \DateTime($data['dateNaissance']));
+            }
+            $user->setImageProfil($data['imageProfil']);
+            $manager->persist($user);
+            $utilisateurs[] = $user;
+        }
+
+        // ========================================================================= //
+        // 6. CRÉATION DES COLLECTIONS (COLLECT)
+        // ========================================================================= //
+
+        $statuts = [
+            StatutJeuEnum::POSSEDE,
+            StatutJeuEnum::SOUHAITE,
+            StatutJeuEnum::EN_COURS,
+            StatutJeuEnum::TERMINE,
+            StatutJeuEnum::ABANDONNE,
+            StatutJeuEnum::PRETE,
+            StatutJeuEnum::VENDU,
+            StatutJeuEnum::PLATINE,
+        ];
+
+        // Denis DUPONT - 8 jeux (indices 1, 7, 8, 10, 14, 18, 2, 11)
+        $denisJeux = [
+            ['jeu' => 1, 'statut' => StatutJeuEnum::EN_COURS, 'prix' => 49.99, 'date' => '2023-12-25', 'comment' => 'Cadeau de Noël, super fun !'],
+            ['jeu' => 7, 'statut' => StatutJeuEnum::TERMINE, 'prix' => 29.99, 'date' => '2020-05-10', 'comment' => 'Un chef-d\'œuvre absolu'],
+            ['jeu' => 8, 'statut' => StatutJeuEnum::TERMINE, 'prix' => 39.99, 'date' => '2021-06-15', 'comment' => 'Histoire incroyable'],
+            ['jeu' => 10, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 19.99, 'date' => '2022-03-20', 'comment' => null],
+            ['jeu' => 14, 'statut' => StatutJeuEnum::PLATINE, 'prix' => 39.99, 'date' => '2021-01-10', 'comment' => '100% complété !'],
+            ['jeu' => 18, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 29.99, 'date' => '2023-08-05', 'comment' => null],
+            ['jeu' => 2, 'statut' => StatutJeuEnum::SOUHAITE, 'prix' => null, 'date' => null, 'comment' => 'À acheter pendant les soldes'],
+            ['jeu' => 11, 'statut' => StatutJeuEnum::ABANDONNE, 'prix' => 69.99, 'date' => '2022-03-01', 'comment' => 'Trop difficile pour moi'],
+        ];
+
+        foreach ($denisJeux as $data) {
+            $collect = new Collect();
+            $collect->setUtilisateur($utilisateurs[0]); // Denis
+            $collect->setJeuvideo($jeux[$data['jeu']]);
+            $collect->setStatut($data['statut']);
+            if ($data['prix']) {
+                $collect->setPrixAchat($data['prix']);
+            }
+            if ($data['date']) {
+                $collect->setDateAchat(new \DateTime($data['date']));
+            }
+            $collect->setCommentaire($data['comment']);
+            $manager->persist($collect);
+        }
+
+        // Marcelle DUMONT - 6 jeux (indices 7, 8, 10, 14, 1, 11)
+        $marcelleJeux = [
+            ['jeu' => 7, 'statut' => StatutJeuEnum::PLATINE, 'prix' => 39.99, 'date' => '2015-06-01', 'comment' => 'Mon jeu préféré de tous les temps'],
+            ['jeu' => 8, 'statut' => StatutJeuEnum::EN_COURS, 'prix' => 59.99, 'date' => '2021-01-15', 'comment' => 'Magnifique graphiquement'],
+            ['jeu' => 10, 'statut' => StatutJeuEnum::TERMINE, 'prix' => 19.99, 'date' => '2017-04-10', 'comment' => null],
+            ['jeu' => 14, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 69.99, 'date' => '2020-05-20', 'comment' => null],
+            ['jeu' => 1, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 49.99, 'date' => '2023-11-30', 'comment' => 'Pour jouer en famille'],
+            ['jeu' => 11, 'statut' => StatutJeuEnum::TERMINE, 'prix' => 69.99, 'date' => '2022-04-15', 'comment' => 'Incroyable aventure'],
+        ];
+
+        foreach ($marcelleJeux as $data) {
+            $collect = new Collect();
+            $collect->setUtilisateur($utilisateurs[1]); // Marcelle
+            $collect->setJeuvideo($jeux[$data['jeu']]);
+            $collect->setStatut($data['statut']);
+            if ($data['prix']) {
+                $collect->setPrixAchat($data['prix']);
+            }
+            if ($data['date']) {
+                $collect->setDateAchat(new \DateTime($data['date']));
+            }
+            $collect->setCommentaire($data['comment']);
+            $manager->persist($collect);
+        }
+
+        // Thomas MARTIN - 7 jeux
+        $thomasJeux = [
+            ['jeu' => 2, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 39.99, 'date' => '2023-10-10', 'comment' => null],
+            ['jeu' => 19, 'statut' => StatutJeuEnum::EN_COURS, 'prix' => 69.99, 'date' => '2022-11-15', 'comment' => 'Jeu épique'],
+            ['jeu' => 12, 'statut' => StatutJeuEnum::TERMINE, 'prix' => 49.99, 'date' => '2020-08-01', 'comment' => 'Magnifique'],
+            ['jeu' => 13, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 39.99, 'date' => '2018-10-05', 'comment' => null],
+            ['jeu' => 15, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 29.99, 'date' => '2023-01-20', 'comment' => 'Addictif'],
+            ['jeu' => 3, 'statut' => StatutJeuEnum::PRETE, 'prix' => 69.99, 'date' => '2023-09-30', 'comment' => 'Prêté à mon frère'],
+            ['jeu' => 20, 'statut' => StatutJeuEnum::SOUHAITE, 'prix' => null, 'date' => null, 'comment' => 'Liste de Noël'],
+        ];
+
+        foreach ($thomasJeux as $data) {
+            $collect = new Collect();
+            $collect->setUtilisateur($utilisateurs[2]); // Thomas
+            $collect->setJeuvideo($jeux[$data['jeu']]);
+            $collect->setStatut($data['statut']);
+            if ($data['prix']) {
+                $collect->setPrixAchat($data['prix']);
+            }
+            if ($data['date']) {
+                $collect->setDateAchat(new \DateTime($data['date']));
+            }
+            $collect->setCommentaire($data['comment']);
+            $manager->persist($collect);
+        }
+
+        // Sophie BERNARD - 9 jeux
+        $sophieJeux = [
+            ['jeu' => 4, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 0.00, 'date' => '2020-01-01', 'comment' => 'Jeu gratuit'],
+            ['jeu' => 20, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 49.99, 'date' => '2020-03-25', 'comment' => 'Relaxant'],
+            ['jeu' => 24, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 13.99, 'date' => '2019-05-10', 'comment' => 'Jeu zen'],
+            ['jeu' => 5, 'statut' => StatutJeuEnum::TERMINE, 'prix' => 39.99, 'date' => '2020-07-01', 'comment' => 'Émotionnellement intense'],
+            ['jeu' => 23, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 9.99, 'date' => '2018-12-20', 'comment' => 'Génial'],
+            ['jeu' => 25, 'statut' => StatutJeuEnum::EN_COURS, 'prix' => 24.99, 'date' => '2021-10-15', 'comment' => null],
+            ['jeu' => 1, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 49.99, 'date' => '2022-06-10', 'comment' => null],
+            ['jeu' => 16, 'statut' => StatutJeuEnum::VENDU, 'prix' => 69.99, 'date' => '2021-11-20', 'comment' => 'Revendu après avoir fini'],
+            ['jeu' => 17, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 39.99, 'date' => '2021-06-01', 'comment' => null],
+        ];
+
+        foreach ($sophieJeux as $data) {
+            $collect = new Collect();
+            $collect->setUtilisateur($utilisateurs[3]); // Sophie
+            $collect->setJeuvideo($jeux[$data['jeu']]);
+            $collect->setStatut($data['statut']);
+            if ($data['prix'] !== null) {
+                $collect->setPrixAchat($data['prix']);
+            }
+            if ($data['date']) {
+                $collect->setDateAchat(new \DateTime($data['date']));
+            }
+            $collect->setCommentaire($data['comment']);
+            $manager->persist($collect);
+        }
+
+        // Lucas PETIT - 6 jeux
+        $lucasJeux = [
+            ['jeu' => 6, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 29.99, 'date' => '2015-01-10', 'comment' => 'Classique'],
+            ['jeu' => 9, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 59.99, 'date' => '2018-11-01', 'comment' => 'Monde ouvert incroyable'],
+            ['jeu' => 15, 'statut' => StatutJeuEnum::POSSEDE, 'prix' => 29.99, 'date' => '2022-05-15', 'comment' => 'Créativité sans limite'],
+            ['jeu' => 18, 'statut' => StatutJeuEnum::TERMINE, 'prix' => 29.99, 'date' => '2019-02-20', 'comment' => null],
+            ['jeu' => 27, 'statut' => StatutJeuEnum::SOUHAITE, 'prix' => null, 'date' => null, 'comment' => 'Envie d\'essayer'],
+            ['jeu' => 11, 'statut' => StatutJeuEnum::EN_COURS, 'prix' => 69.99, 'date' => '2022-03-10', 'comment' => 'Difficile mais passionnant'],
+        ];
+
+        foreach ($lucasJeux as $data) {
+            $collect = new Collect();
+            $collect->setUtilisateur($utilisateurs[4]); // Lucas
+            $collect->setJeuvideo($jeux[$data['jeu']]);
+            $collect->setStatut($data['statut']);
+            if ($data['prix']) {
+                $collect->setPrixAchat($data['prix']);
+            }
+            if ($data['date']) {
+                $collect->setDateAchat(new \DateTime($data['date']));
+            }
+            $collect->setCommentaire($data['comment']);
+            $manager->persist($collect);
+        }
+
+        // Emma ROBERT - Aucun jeu (utilisateur sans collection)
+
+        // ========================================================================= //
+        // 7. ENVOI EN BASE DE DONNÉES
         // ========================================================================= //
 
         $manager->flush();

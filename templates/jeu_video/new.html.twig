@@ -7,8 +7,7 @@
 
     {{ include('jeu_video/_form.html.twig') }}
 
-    <div class="d-flex gap-2 mt-3">
-        <button type="submit" form="main-form" class="btn btn-primary">Ajouter</button>
-        <a href="{{ path('app_jeu_video_index') }}" class="btn btn-secondary">Retour à la liste</a>
+    <div class="mt-3">
+        <a href="{{ path('app_jeu_video_index') }}" class="btn btn-secondary">← Retour à la liste</a>
     </div>
 {% endblock %}

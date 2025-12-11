@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Collections{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Collections</li>
+{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>📚 Collections de Jeux Vidéo</h1>
+    <a href="{{ path('app_collect_new') }}" class="btn btn-custom">
+        + Ajouter un jeu à une collection
+    </a>
+</div>
+
+<div class="row g-4">
+    {% for utilisateur in utilisateurs %}
+        <div class="col-md-6 col-lg-4">
+            <div class="game-card">
+                <div class="game-card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        {% if utilisateur.imageProfil %}
+                            <img src="{{ utilisateur.imageProfil }}" alt="{{ utilisateur.pseudo }}" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                        {% else %}
+                            <div class="rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; background-color: var(--primary); color: white; font-size: 1.5rem; font-weight: bold;">
+                                {{ utilisateur.prenom|first }}{{ utilisateur.nom|first }}
+                            </div>
+                        {% endif %}
+                        <div>
+                            <h5 class="game-title mb-0">{{ utilisateur.pseudo }}</h5>
+                            <small class="text-white opacity-75">{{ utilisateur.prenom }} {{ utilisateur.nom }}</small>
+                        </div>
+                    </div>
+
+                    <div class="game-meta">
+                        <span>
+                            <strong>{{ utilisateur.collects|length }}</strong> jeu{{ utilisateur.collects|length > 1 ? 'x' : '' }}
+                        </span>
+                        {% if utilisateur.dateNaissance %}
+                            <small class="text-white opacity-75">
+                                Né(e) le {{ utilisateur.dateNaissance|date('d/m/Y') }}
+                            </small>
+                        {% endif %}
+                    </div>
+
+                    <div class="mt-3">
+                        {% if utilisateur.collects|length > 0 %}
+                            <a href="{{ path('app_collect_show_user', {'id': utilisateur.id}) }}" class="btn btn-outline-custom w-100">
+                                👁️ Voir la collection
+                            </a>
+                        {% else %}
+                            <p class="text-muted text-center mb-0">Aucun jeu dans la collection</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                Aucun utilisateur trouvé.
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

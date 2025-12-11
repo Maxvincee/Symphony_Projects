@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_collect_delete', {'id': collect.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce jeu de la collection ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ collect.id) }}">
+    <button class="btn btn-outline-danger">Supprimer</button>
+</form>

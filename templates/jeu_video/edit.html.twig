@@ -8,8 +8,7 @@
     {{ include('jeu_video/_form.html.twig', {'button_label': 'Valider'}) }}
 
     <div class="d-flex gap-2 mt-3">
-        <button type="submit" form="main-form" class="btn btn-primary">Valider</button>
         {{ include('jeu_video/_delete_form.html.twig') }}
-        <a href="{{ path('app_jeu_video_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        <a href="{{ path('app_jeu_video_index') }}" class="btn btn-secondary">← Retour à la liste</a>
     </div>
 {% endblock %}

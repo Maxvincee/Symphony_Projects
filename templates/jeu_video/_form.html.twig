@@ -1,4 +1,4 @@
-{{ form_start(form, {'attr': {'id': 'main-form'}}) }}
+{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
 
     {# Affichage des erreurs globales #}
     {{ form_errors(form) }}
@@ -31,4 +31,6 @@
 
     {{ form_row(form.imageFile) }}
 
-{{ form_end(form, {'render_rest': false}) }}
+    <button type="submit" class="btn btn-custom mt-3">{{ button_label|default('💾 Enregistrer') }}</button>
+
+{{ form_end(form) }}

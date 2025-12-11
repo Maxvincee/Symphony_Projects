@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\JeuVideoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -46,6 +48,17 @@ class JeuVideo
     #[ORM\ManyToOne(inversedBy: 'jeuVideos')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Developpeur $developpeur = null;
+
+    /**
+     * @var Collection<int, Collect>
+     */
+    #[ORM\OneToMany(targetEntity: Collect::class, mappedBy: 'jeuvideo', orphanRemoval: true)]
+    private Collection $collects;
+
+    public function __construct()
+    {
+        $this->collects = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -168,6 +181,36 @@ class JeuVideo
     public function setDeveloppeur(?Developpeur $developpeur): static
     {
         $this->developpeur = $developpeur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Collect>
+     */
+    public function getCollects(): Collection
+    {
+        return $this->collects;
+    }
+
+    public function addCollect(Collect $collect): static
+    {
+        if (!$this->collects->contains($collect)) {
+            $this->collects->add($collect);
+            $collect->setJeuvideo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCollect(Collect $collect): static
+    {
+        if ($this->collects->removeElement($collect)) {
+            // set the owning side to null (unless already changed)
+            if ($collect->getJeuvideo() === $this) {
+                $collect->setJeuvideo(null);
+            }
+        }
 
         return $this;
     }
